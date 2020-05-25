@@ -19,7 +19,7 @@ public @interface ValidMortgageInformation {
 	
 	public static final int MAX_LENGTH_OF_LOAN_IN_YEARS = 30;
 	
-	String message() default "Down payment cannot be higher than 10% of the property purchase price";
+	String message() default "{com.scotiabank.housing.rest.models.validation.downpaymentLimit}";
 	
     Class<?>[] groups() default { };
     

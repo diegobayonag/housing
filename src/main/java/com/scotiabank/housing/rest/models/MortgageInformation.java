@@ -24,21 +24,21 @@ public class MortgageInformation implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
-	@Positive(message = "Only numerical and positive values accepted.")
+	@Positive(message = "{com.scotiabank.housing.rest.models.validation.numericalPositiveValues}")
 	private double downPaymentOnTheMortgageLoan;
 	
-	@Positive(message = "Only numerical and positive values accepted.")
+	@Positive(message = "{com.scotiabank.housing.rest.models.validation.numericalPositiveValues}")
 	private double propertyPurchasePrice;
 	
-	@Min(value = 0, message = "Only numerical and positive values accepted.")
-	@Max(value = 100, message="The maximum percentage value is 100.")
+	@Min(value = 0, message = "{com.scotiabank.housing.rest.models.validation.numericalPositiveValues}")
+	@Max(value = 100, message="{com.scotiabank.housing.rest.models.validation.maxPercentage}")
 	private double anualInterestRateAsPercentage;
 	
-	@Min(value = 1, message = "Only numerical and positive values accepted.")
-	@Max(value = ValidMortgageInformation.MAX_LENGTH_OF_LOAN_IN_YEARS, message = "Years of loan cannot be more than 30 years." )
+	@Min(value = 1, message = "{com.scotiabank.housing.rest.models.validation.numericalPositiveValues}")
+	@Max(value = ValidMortgageInformation.MAX_LENGTH_OF_LOAN_IN_YEARS, message = "{com.scotiabank.housing.rest.models.validation.maxYearsOfLoan}" )
 	private int lengthOfLoanInYears;
 	
-	@PositiveOrZero(message = "Only numerical and positive values accepted")
+	@PositiveOrZero(message = "{com.scotiabank.housing.rest.models.validation.numericalPositiveValues}")
 	private double totalMontlyMortgagePayment;
 
 	

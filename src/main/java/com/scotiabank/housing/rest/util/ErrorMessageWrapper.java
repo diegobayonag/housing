@@ -1,5 +1,14 @@
 package com.scotiabank.housing.rest.util;
 
+/**
+* <h1>Error Message Wrapper</h1>
+* Utility class 
+* 
+* @author  Diego Bayona Gómez
+* @version 1.0
+* @since   2020-05-23
+*/
+
 public class ErrorMessageWrapper {
 
 	private String errorCode;

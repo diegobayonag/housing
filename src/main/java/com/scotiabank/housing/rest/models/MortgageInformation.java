@@ -10,29 +10,37 @@ import javax.validation.constraints.PositiveOrZero;
 import com.scotiabank.housing.rest.models.validation.ValidMortgageInformation;
 
 
+/**
+* <h1>Mortgage Information</h1>
+* Bean that encapsulate the Mortgage Informationfor request and response 
+*
+* @author  Diego Bayona Gómez
+* @version 1.0
+* @since   2020-05-23
+*/
+
 @ValidMortgageInformation()
 public class MortgageInformation implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
-	@Positive
+	@Positive(message = "Only numerical and positive values accepted.")
 	private double downPaymentOnTheMortgageLoan;
 	
-	@Positive
+	@Positive(message = "Only numerical and positive values accepted.")
 	private double propertyPurchasePrice;
 	
-	@Min(0)
-	@Max(100)
+	@Min(value = 0, message = "Only numerical and positive values accepted.")
+	@Max(value = 100, message="The maximum percentage value is 100.")
 	private double anualInterestRateAsPercentage;
 	
-	@Min(1)
-	@Max(ValidMortgageInformation.MAX_LENGTH_OF_LOAN_IN_YEARS)
-	private double lengthOfLoanInYears;
+	@Min(value = 1, message = "Only numerical and positive values accepted.")
+	@Max(value = ValidMortgageInformation.MAX_LENGTH_OF_LOAN_IN_YEARS, message = "Years of loan cannot be more than 30 years." )
+	private int lengthOfLoanInYears;
 	
-	@PositiveOrZero
+	@PositiveOrZero(message = "Only numerical and positive values accepted")
 	private double totalMontlyMortgagePayment;
 
-	
 	
 	// Getter Methods
 	
@@ -48,7 +56,7 @@ public class MortgageInformation implements Serializable {
 		return anualInterestRateAsPercentage;
 	}
 
-	public double getLengthOfLoanInYears() {
+	public int getLengthOfLoanInYears() {
 		return lengthOfLoanInYears;
 	}
 
@@ -70,11 +78,11 @@ public class MortgageInformation implements Serializable {
 		this.anualInterestRateAsPercentage = anualInterestRateAsPercentage;
 	}
 
-	public void setLengthOfLoanInYears(double lengthOfLoanInYears) {
+	public void setLengthOfLoanInYears(int lengthOfLoanInYears) {
 		this.lengthOfLoanInYears = lengthOfLoanInYears;
 	}
 
-	public void setTotalMontlyMortgagePayment(double totalMontlyMortgagePAyment) {
-		this.totalMontlyMortgagePayment = totalMontlyMortgagePAyment;
+	public void setTotalMontlyMortgagePayment(double totalMontlyMortgagePayment) {
+		this.totalMontlyMortgagePayment = totalMontlyMortgagePayment;
 	}
 }

@@ -5,11 +5,20 @@ import org.springframework.stereotype.Service;
 import com.scotiabank.housing.rest.models.MortgageInformation;
 
 
+/**
+* <h1>Mortgage Information Calculator Service</h1>
+* Mortgage Calculator   
+*
+* @author  Diego Bayona Gómez
+* @version 1.0
+* @since   2020-05-23
+*/
+
 @Service("mortgageCalculator")
 public class MortgageCalculator implements IMortgageCalculator {
 	
 	/**
-	 * Equation for mortgage payments
+	 * Service that calculates the total monthly payment for mortgage
 	 *  
 	 * M = P[ r ((1+r)^n) /( ((1+r)^n) - 1)] 
 	 * 
@@ -26,6 +35,8 @@ public class MortgageCalculator implements IMortgageCalculator {
  	 * Example resource:
  	 * 
  	 *     https://www.youtube.com/watch?v=Pgot9V7uZXw
+ 	 * 
+ 	 * @param Mortgage Information
  	 *     
 	 **/	
 	

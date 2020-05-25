@@ -8,11 +8,13 @@ import java.lang.annotation.Target;
 import javax.validation.Constraint;
 import javax.validation.Payload;
 
+
+
 @Constraint(validatedBy = MortgageInformationValidator.class)
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ValidMortgageInformation {
-
+	
 	public static final float MAX_PERCENTAGE_FOR_DOWNPAYMENT = 10;
 	
 	public static final int MAX_LENGTH_OF_LOAN_IN_YEARS = 30;

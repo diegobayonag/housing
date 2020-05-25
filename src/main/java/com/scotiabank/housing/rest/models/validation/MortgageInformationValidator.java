@@ -5,12 +5,22 @@ import javax.validation.ConstraintValidatorContext;
 
 import com.scotiabank.housing.rest.models.MortgageInformation;
 
+/**
+* <h1>Mortgage Information Validator</h1>
+* Custom validator for the Mortgage Information Bean  
+*
+* @author  Diego Bayona Gómez
+* @version 1.0
+* @since   2020-05-23
+*/
+
 public class MortgageInformationValidator implements ConstraintValidator<ValidMortgageInformation,MortgageInformation>{
 
 	
 	/**
-	 * Validate the rule
-	 * down payment cannot be higher than 10% of the property purchase price
+	 * Validates the rule: down payment cannot be higher than 10% of the property purchase price
+	 * @param MortgageInformation
+	 * @return Assert if down payment is higher than 10% of the property purchase price
 	 */
 	
 	@Override

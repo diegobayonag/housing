@@ -1,9 +1,9 @@
 package com.scotiabank.housing.rest.services;
 
-import com.scotiabank.housing.rest.models.MortgageLoanInformation;
+import com.scotiabank.housing.rest.models.MortgageInformation;
 
 public interface IMortgageCalculator {
 
-	void calculateTotalMontlyPayment(MortgageLoanInformation loanInformation);
+	void calculateTotalMontlyPayment(MortgageInformation loanInformation);
 
 }

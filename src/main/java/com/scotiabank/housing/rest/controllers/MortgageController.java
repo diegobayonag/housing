@@ -1,55 +1,70 @@
 package com.scotiabank.housing.rest.controllers;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.Vector;
+
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.scotiabank.housing.rest.models.MortgageLoanInformation;
+import com.scotiabank.housing.rest.models.MortgageInformation;
 import com.scotiabank.housing.rest.services.IMortgageCalculator;
 import com.scotiabank.housing.rest.util.ErrorMessageWrapper;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
-
 @RestController
 @RequestMapping(value="/v1/mortgage") // TODO: change for Mortgage Payment
-@Api(tags = "Mortgage")
-public class MortgageController {
+
+public class MortgageController implements IMortgageController {
 	
 	@Autowired
 	private IMortgageCalculator _mortgageCalculatorService;
 	
 	
-	//POST
-	//@RequestMapping(value="/calculateMontlyPayment", method= RequestMethod.POST, headers="Accept=application/json")
+	
+	/**
+     * POST /mortgage : Process the monthly mortgage payment
+     * 
+     * @param body Mortgage Information object (required)
+     * @return successful operation (status code 200) with the Mortgage Information Response Entity
+     * 
+     */
+	
 	@PostMapping
-	@ApiOperation(value = "Calculate montly mortgage payment",
-				  notes = "This operation* provides the calculation for "+
-							"........")
-	
-	@ApiResponses(value = {
-						@ApiResponse(code = 202, message = "montly mortgage paymente sucessfully calculated*"),
-						@ApiResponse(code = 400, message = "Invalid request*"),
-				 })
-	
-	public ResponseEntity<?> calculateMontlyMortgagePayment(@RequestBody MortgageLoanInformation loanInformation){
-		
-		if(loanInformation.getPropertyPurchasePrice() <= 0
-			|| loanInformation.getAnualInterestRateAsPercentage() <= 0
-			|| loanInformation.getAnualInterestRateAsPercentage() >= 100)
-			return new ResponseEntity<Object>(
-					new ErrorMessageWrapper("the mortage information must have values greatter tahan 0")
-											,HttpStatus.CONFLICT);
-		
+	public ResponseEntity<?> calculateMontlyMortgagePayment(@Valid @RequestBody MortgageInformation loanInformation){
+				
 		_mortgageCalculatorService.calculateTotalMontlyPayment(loanInformation);
 		
-		return new ResponseEntity<MortgageLoanInformation>(loanInformation, HttpStatus.OK); 
+		return new ResponseEntity<MortgageInformation>(loanInformation, HttpStatus.OK); 
 	}
+	
+	
+	@ResponseStatus(HttpStatus.BAD_REQUEST)
+	@ExceptionHandler(MethodArgumentNotValidException.class)
+	public List<ErrorMessageWrapper> handleMethodArgumentNotValid(MethodArgumentNotValidException ex) {
+	    
+		BindingResult br = ex.getBindingResult(); 
+		
+		List<ErrorMessageWrapper> errors = new Vector<ErrorMessageWrapper>();
+		
+		br.getFieldErrors().forEach(error -> 
+        	errors.add(new ErrorMessageWrapper(new Vector<String>(Arrays.asList(error.getCodes())).firstElement().toString(), error.getField(), error.getDefaultMessage())));
+		
+		br.getGlobalErrors().forEach(error -> 
+			errors.add(new ErrorMessageWrapper(new Vector<String>(Arrays.asList(error.getCodes())).firstElement().toString(), error.getObjectName(), error.getDefaultMessage())));
+	
+		return errors;
+	}
+	
 	
 }
